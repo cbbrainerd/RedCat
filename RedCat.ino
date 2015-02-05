@@ -45,7 +45,7 @@ mode currentMode = NORMAL;
 
 unsigned int currentValue = 0;
 byte output1, output2, output3;
-const char SET_CODES[] = {'a', 'b', 'c', 'd', 'e', 'f'}; //Characters the computer sends associated with the 'mode'
+//const char SET_CODES[] = {'a', 'b', 'c', 'd', 'e', 'f'}; //Characters the computer sends associated with the 'mode'
 
 // Data and address integers
 unsigned int correctData = 170;
@@ -53,7 +53,7 @@ unsigned int correctDataStart = 170;
 unsigned int startMessed = 0;
 unsigned int numPowerCycles = 5;
 unsigned int divider = 0;
-unsigned int numRuns = 1; // Number of runs
+unsigned int numRuns = 0; // Number of runs per power cycle. 0 means run forever
 
 unsigned int delayAfterWrite = 10; // Delay after writing (in milliseconds)
 unsigned int readsAfterFailure = 5; // Number of reads if there is a bad read
@@ -468,7 +468,7 @@ void loop() {
   establishContact();
   getData();
 
-  Serial.print("Mode:");
+/*  Serial.print("Mode:");
   Serial.println(currentMode);  
   Serial.print("Data:");
   Serial.println((correctData%16)+((correctData>>6)<<4),HEX);
@@ -478,11 +478,11 @@ void loop() {
   Serial.println(numPowerCycles);
   Serial.print("Rereads after failure:");
   Serial.println(readsAfterFailure);
-  
+*/  
   for (int pwrc = 0; pwrc < numPowerCycles; pwrc++) {
-    for (int rn = 0; rn < numRuns; rn++) { //main loop for the tests
+    for (int rn = 0; (rn < numRuns) && (numRuns != 0); rn++) { //main loop for the tests
       int addr = 0;
-      long addressInt = 0;
+      long addressInt = 0;/
       int dataInt = 0;
       int seed = analogRead(0);
 //      REG_PIOC_OWER |= DATA_MASK; //Sets data pins to output
@@ -592,4 +592,5 @@ void loop() {
     delay(2000);
     REG_PIOA_ODSR |= REGA_POWER; //digitalWrite(POWER, HIGH);
   }
+  Serial.println("------");
 }
