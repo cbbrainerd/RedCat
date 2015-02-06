@@ -1,3 +1,6 @@
+#ifndef __RUNH_INCLUDED__
+#define __RUNH_INCLUDED__
+
 class Run;
 
 class CreateRun {
