@@ -164,6 +164,7 @@ def user_inputs():
   #getNumberInput(holderString, 0, 1000000, 1, 'C')
 
   holderString = "INPUT NUMBER OF TIMES TO RE-READ ADDRESS AFTER FAILURE: "
+
   getNumberInput(holderString, 0, 100, 1, 'D')
 
 

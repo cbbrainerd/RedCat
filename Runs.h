@@ -1,11 +1,10 @@
-#ifndef __CREATERUNH_INCLUDED__
-#define __CREATERUNH_INCLUDED__
+#ifndef __RUNH_INCLUDED__
+#define __RUNH_INCLUDED__
+#include <string>
 
-class Run;
-
-class CreateRun {
+class Run {
 public:
-    CreateRun();
+    Run();
     Run& runsPerPowerCycle(unsigned int runs);
     Run& numberPowerCycles(unsigned int pc);
     Run& data(unsigned short databyte);
@@ -13,7 +12,6 @@ public:
     Run& inputMode(unsigned short mode);
     Run& saveTo(std::string filename);
 private:
-    friend class Run;
     unsigned int numRuns_;
     unsigned int numPC_;
     unsigned short data_;
