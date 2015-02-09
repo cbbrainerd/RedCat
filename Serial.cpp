@@ -2,18 +2,23 @@
 #include <string>
 #include <Runs.hpp>
 #include <fstream>
+//#include <CSerial>
+
+constexpr int Baud = 115200;
+std::string Port = "COM20";
 
 void Manual() {
-    std::cout << "\nInvalid Input.\nCommand line options are the following:\n\n-x: Ask for input from command line.\n-f [filename]: Read script from [filename]. This defaults to \"DefaultFilename\"\n-m: Just make script to be read from file later. This switch implies -x.\n-s [filename]: Save log to [filename]. By default, this appends to 'logFile'.\n\n";
+    std::cout << "\nInvalid Input.\nCommand line options are the following:\n\n-x: Ask for input from command line.\n-f [filename]: Read script from [filename]. This defaults to \"DefaultFilename\"\n-m: Just make script to be read from file later. This switch implies -x.\n-s [filename]: Save log to [filename]. By default, this appends to 'logFile'.\n-p [Port]: Select the serial port to use.\n\n";
 }
 
-enum{nul,x,f,s,m};
+enum{nul,x,f,s,m,p};
 
 int parse(const char argument) {
     if (argument == 'x') return x;
     if (argument == 'f') return f;
     if (argument == 's') return s;
     if (argument == 'm') return m;
+    if (argument == 'p') return p;
     return nul;
 }
 
@@ -53,6 +58,10 @@ int main(int argc, char* argv[]) {
                 case m:
                     doRun = false;
                     break;
+                case p:
+                    if ((i + 1 != argc) && (j + 1 == lenarg)) Port = argv[++i];
+                    else {Manual();return -1;}
+                    break;
                 default:
                     Manual();
                     return -1;
@@ -67,6 +76,9 @@ int main(int argc, char* argv[]) {
         while(std::getline(file,inputInfo)) {
             Run run;
             Finished = run.ReadFromFile(inputInfo);
+//            CSerial serial;
+//            serial.Open(Port,Baud);
         }
     }
 }    
+
