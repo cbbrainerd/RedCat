@@ -8,6 +8,12 @@ public:
     int ReadFromFile(std::string);
     int Tui();
 private: 
+    Run& numRuns__(int);
+    Run& numPC__(int);
+    Run& dataByte__(int);
+    Run& numTries__(int);
+    Run& whichMode__(int);
+    Run& logFile__(std::string);
     int ParseCommands(char);
     int numRuns_;
     int numPC_;
