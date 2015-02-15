@@ -49,7 +49,14 @@ int Run::Tui() {
     return 0;   //Not yet written- no interface
 }   
 
-int Run::ReadFromFile(std::string inputInfo) { //Read from file and set runtime variables
+Run::Run(std::string inputInfo) 
+    : numRuns_      (0)
+    , numPC_        (0)
+    , dataByte_     (170)
+    , numTries_     (100)
+    , whichMode_    (3)
+    , logFile_      ("logFile")
+{ //Read from file and set runtime variables
     bool CommandReceived = false;
     char comm;
     int whichVar = 0; //The contents of this variable determines which variable is set
@@ -87,5 +94,7 @@ int Run::ReadFromFile(std::string inputInfo) { //Read from file and set runtime 
             CommandReceived = true;
         }
     }
+#ifndef NDEBUG    
     std::cout<<"A"<<dataByte_<<"\nB"<<numRuns_<<"\nD"<<numTries_<<"\nE"<<whichMode_<<"\nF"<<numPC_<<"\n";
+#endif
 }    

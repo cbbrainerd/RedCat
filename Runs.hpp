@@ -5,7 +5,7 @@
 class Run {
 public:
     Run();
-    int ReadFromFile(std::string);
+    Run(std::string);
     int Tui();
 private: 
     Run& numRuns__(int);

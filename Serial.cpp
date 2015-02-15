@@ -11,17 +11,6 @@ void Manual() {
     std::cout << "\nInvalid Input.\nCommand line options are the following:\n\n-x: Ask for input from command line.\n-f [filename]: Read script from [filename]. This defaults to \"DefaultFilename\"\n-m: Just make script to be read from file later. This switch implies -x.\n-s [filename]: Save log to [filename]. By default, this appends to 'logFile'.\n-p [Port]: Select the serial port to use.\n\n";
 }
 
-enum{nul,x,f,s,m,p};
-
-int parse(const char argument) {
-    if (argument == 'x') return x;
-    if (argument == 'f') return f;
-    if (argument == 's') return s;
-    if (argument == 'm') return m;
-    if (argument == 'p') return p;
-    return nul;
-}
-
 int main(int argc, char* argv[]) {
     bool ReadFromFile = true;
     bool doRun = true;
@@ -42,23 +31,22 @@ int main(int argc, char* argv[]) {
             return -1;
         }
         for (int j = 1; j < lenarg; ++j) {
-            int switchy = parse((argv[i])[j]);
-            switch (switchy) {
-                case x:
+            switch ((argv[i])[j]) {
+                case 'x':
                     ReadFromFile = false;
                     break;
-                case f:
+                case 'f':
                     if ((i + 1 != argc) && (j + 1 == lenarg)) filename = argv[++i];
                     else {Manual();return -1;}
                     break;
-                case s:
+                case 's':
                     if ((i + 1 != argc) && (j + 1 == lenarg)) LogFile = argv[++i];
                     else {Manual();return -1;}
                     break;
-                case m:
+                case 'm':
                     doRun = false;
                     break;
-                case p:
+                case 'p':
                     if ((i + 1 != argc) && (j + 1 == lenarg)) Port = argv[++i];
                     else {Manual();return -1;}
                     break;
@@ -74,8 +62,7 @@ int main(int argc, char* argv[]) {
         file.open(filename,std::ifstream::in);
         std::string inputInfo;
         while(std::getline(file,inputInfo)) {
-            Run run;
-            Finished = run.ReadFromFile(inputInfo);
+            Run run = Run(inputInfo);
 //            CSerial serial;
 //            serial.Open(Port,Baud);
         }
